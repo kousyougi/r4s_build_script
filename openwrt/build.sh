@@ -186,7 +186,7 @@ git clone --depth=1 https://$github/openwrt/openwrt -b $branch
 if [ "$1" = "rc2" ]; then
     git clone https://$github/openwrt/openwrt master/openwrt --depth=1
     git clone https://$github/openwrt/packages master/packages --depth=1
-    git clone https://$github/openwrt/luci master/luci --depth=1
+    #2024.10.24# git clone https://$github/openwrt/luci master/luci --depth=1
     git clone https://$github/openwrt/routing master/routing --depth=1
 fi
 
@@ -217,18 +217,18 @@ fi
 # feeds mirror
 if [ "$1" = "rc2" ]; then
     packages="^$(grep packages feeds.conf.default | awk -F^ '{print $2}')"
-    luci="^$(grep luci feeds.conf.default | awk -F^ '{print $2}')"
+    #2024.10.24# luci="^$(grep luci feeds.conf.default | awk -F^ '{print $2}')"
     routing="^$(grep routing feeds.conf.default | awk -F^ '{print $2}')"
     telephony="^$(grep telephony feeds.conf.default | awk -F^ '{print $2}')"
 else
     packages=";$branch"
-    luci=";$branch"
+    #2024.10.24# luci=";$branch"
     routing=";$branch"
     telephony=";$branch"
 fi
 cat > feeds.conf <<EOF
 src-git packages https://$github/openwrt/packages.git$packages
-src-git luci https://$github/openwrt/luci.git$luci
+#2024.10.24# src-git luci https://$github/openwrt/luci.git$luci
 src-git routing https://$github/openwrt/routing.git$routing
 src-git telephony https://$github/openwrt/telephony.git$telephony
 EOF
@@ -312,7 +312,7 @@ fi
 [ "$NO_KMOD" != "y" ] && [ "$platform" != "rk3399" ] && curl -s https://$mirror/openwrt/generic/config-firmware >> .config
 
 # ota
-[ "$ENABLE_OTA" = "y" ] && [ "$version" = "rc2" ] && echo 'CONFIG_PACKAGE_luci-app-ota=y' >> .config
+#2024.10.24# [ "$ENABLE_OTA" = "y" ] && [ "$version" = "rc2" ] && echo 'CONFIG_PACKAGE_luci-app-ota=y' >> .config
 
 # bpf
 [ "$ENABLE_BPF" = "y" ] && curl -s https://$mirror/openwrt/generic/config-bpf >> .config
